@@ -1,0 +1,48 @@
+.GlavniKontejner
+{
+    display: flex;
+    flex-direction: row;
+}
+
+.Forma{
+    display: flex;
+    /*flex: 0 0 200px;*/
+    max-width: 500px;
+    flex-direction: column;
+    background-color: rgba(0, 0, 0, .1);
+    border-radius: 4px;
+    
+    
+}
+
+
+html {
+    background: url("./sl1.jpg") no-repeat center center fixed;
+    background-size: cover;
+    height: 100%;
+   
+}
+
+table,th,tr,td{
+    border: 1px solid black;
+   
+}
+
+table{
+    border-collapse: collapse;
+}
+
+.Narudzbina{
+    display: flex;    
+    flex-direction: column;
+}
+
+.divDodajKlijenta{
+    display: flex;  
+    flex-direction: column;
+ 
+}
+
+button{
+    margin-top: 8px;
+}
