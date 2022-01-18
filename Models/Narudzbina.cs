@@ -14,7 +14,6 @@ namespace Models
         public virtual Jela Jela { get; set; }
         public virtual Klijent Klijent { get; set; }
         public virtual Pica Pica { get; set; }
-
         public virtual Restoran Restoran {get; set;}
     }
 }
