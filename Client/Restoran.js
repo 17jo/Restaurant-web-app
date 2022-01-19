@@ -21,7 +21,7 @@ export class Restoran{
         this.kont.appendChild(kontForma);
 
         this.crtajFormu(kontForma);
-        //this.crtajPrikaz(this.kont);
+        this.crtajPrikaz(this.kont);
     }
     
     crtajPrikaz(host){
@@ -44,15 +44,6 @@ export class Restoran{
         var tabelaBody = document.createElement("tbody");
         tabelaBody.className="TabelaPodaci";
         tabela.appendChild(tabelaBody);
-        let th;
-        var zag=["Ime", "Prezime", "Jelo", "Dezert", "Piće"];
-        zag.forEach(el=>{
-            th = document.createElement("th");
-            th.innerHTML=el;
-            tr.appendChild(th);
-        })
-
-       
 
     }
 
@@ -78,9 +69,7 @@ export class Restoran{
                if (s.status ==200){ alert("Uspesno dodat klijent");}
                else
                {
-                   if(s.status==202){
-                       alert("Nije validno");
-                   }
+                       alert("Vec postoji klijent sa tim brojem telefona");
                }
         })
     }
@@ -314,10 +303,7 @@ export class Restoran{
         host.appendChild(btnNaruci);
        
     }
-    kontrola(ms)
-    {
-        
-    }
+
     PromenaSelekta(divNarudzbina)
     {
         
@@ -473,7 +459,8 @@ export class Restoran{
         } 
     }
     nadjiNarudzbinu(ms){
-        this.crtajPrikaz(this.kont);
+        
+        
      //izvlacenje iz "select" izabrano   
         let x = this.kont.querySelector(".jeloclass");
         var y=x.options[x.selectedIndex].value;
@@ -498,16 +485,16 @@ export class Restoran{
             {
                 console.log(s.status);
                 console.log(s);
-               if (s.status ==200){ this.UcitajListuNarudzbina(ID1);}
-               else
-               {
-                   if(s.status==202){
-                       alert("Nije validno");
-                   }
-               }
+                if (s.status ==200){  this.UcitajListuNarudzbina(ID1);}
+                else    if(s.status==202 || s.status==400){
+                            alert("Nije validno");
+                        
+                        }
+                  
+               
         })
 
-        
+       
       
     }
 
@@ -518,10 +505,17 @@ export class Restoran{
             method:"GET"
         }).then(s=>{
             if(s.ok){
+
                   var teloTabele = this.obrisiPrethodniSadrzaj() ;
+                  let th;
+        var zag=["Ime", "Prezime", "Jelo", "Dezert", "Piće"];
+        zag.forEach(el=>{
+            th = document.createElement("th");
+            th.innerHTML=el;
+            teloTabele.appendChild(th);
+        })
                 s.json().then(data=>{
-                    data.forEach(s=>{
-                       
+                    data.forEach(s=>{  
                         let st = new Narudzbina(s.ime,s.prezime,s.jela,s.dezert,s.pice);
                         st.crtaj(teloTabele);
                     })
@@ -532,14 +526,16 @@ export class Restoran{
     }
     obrisiPrethodniSadrzaj()
     {
+       
         var teloTabele = document.querySelector(".TabelaPodaci");
         var roditelj = teloTabele.parentNode;
         roditelj.removeChild(teloTabele);
-
         teloTabele = document.createElement("tbody");
         teloTabele.className="TabelaPodaci";
         roditelj.appendChild(teloTabele);
         return teloTabele;
+
+    
     }
 
 }

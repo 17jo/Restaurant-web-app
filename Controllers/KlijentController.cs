@@ -47,8 +47,9 @@ namespace Projekat.Controllers
         public async Task<ActionResult> AddKlijenta(string ime, string prezime, int brTel)
         {
           
-
-          
+           
+           if(Context.Klijenti
+            .Where(p => p.BrojTelefona == brTel).FirstOrDefault()!=null) return BadRequest("Isti br tel");
             if(string.IsNullOrWhiteSpace(ime) || ime.Length > 30)
                 return BadRequest("Ime nije validno");
 
@@ -65,7 +66,7 @@ namespace Projekat.Controllers
                     };
                     Context.Klijenti.Add(k);
                     await Context.SaveChangesAsync();
-                    return Ok("Uspesno dodaj klijent");
+                    return Ok("Uspesno dodat klijent");
      
             }
             catch(Exception e)
@@ -85,7 +86,9 @@ namespace Projekat.Controllers
 
             if(string.IsNullOrWhiteSpace(prezime) || prezime.Length > 30)
                 return BadRequest("Prezime nije validno");   
-
+            
+            if(Context.Klijenti
+            .Where(p => p.BrojTelefona == brTelNovi).FirstOrDefault()!=null) return BadRequest("Vec postoji taj broj");
             try
             {
                 var klijent = Context.Klijenti.Where( p => p.BrojTelefona == brTel).FirstOrDefault();
